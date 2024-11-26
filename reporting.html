@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WasteWiseWeb - Community Waste Management Reporting</title>
+    <link rel="icon" type="image/x-icon" href="web.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
@@ -195,22 +196,85 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .responsive-sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: var(--primary);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    .responsive-sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* Close button inside the sidebar */
+        .responsive-sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /* Button to open the sidebar */
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            display: none; /* Hidden by default */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .openbtn {
+                display: inline-block; /* Show open button on smaller screens */
+
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">WasteWiseWeb</div>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: #f4f4f4;">WasteWiseWeb</a></div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
                 <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
-                <li><a href="attendance.html">Attendance</a></li>
+                <!-- <li><a href="attendance.html">Attendance</a></li> -->
                 <li><a href="marketplace.html">Store</a></li>
                 <li><a href="account.html">Sign In</a></li>
             </ul>
+            
+           <div id="mySidebar" class="responsive-sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="index.html">Home</a>
+            <a href="educational-hub.html">Learn</a>
+            <a href="scheduling.html">Events</a>
+            <a href="monitoring.html">Dashboard</a>
+            <a href="reporting.html">Report</a>
+            <!-- <a href="attendance.html">Attendance</a> -->
+            <a href="marketplace.html">Store</a>
+            <a href="account.html">Sign In</a>
+            <!-- Add other navigation links here -->
+        </div>
+        <button class="openbtn" onclick="openNav()">&#9776; Menu</button>
         </nav>
     </header>
 
@@ -255,8 +319,10 @@
 
                 <section class="map-section">
                     <h2>Map of Reported Issues</h2>
+                    <br>
+                    <br>
                     <div class="map-placeholder">
-                        Map integration required
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126249.71419895187!2d124.7234046740998!3d8.566780991322718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32ffef33c6908649%3A0x46e6034692c15dcb!2sVillanueva%2C%20Misamis%20Oriental!5e0!3m2!1sen!2sph!4v1730532850015!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </section>
             </div>
@@ -267,10 +333,10 @@
         <div class="container">
             <p>&copy; 2024 WasteWiseWeb. All rights reserved.</p>
             <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
     </footer>
@@ -304,6 +370,16 @@
                 reportForm.reset();
             });
         });
+
+        function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
     </script>
 </body>
 </html>

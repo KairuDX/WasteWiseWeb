@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WasteWiseWeb - Community Schedule</title>
+    <link rel="icon" type="image/x-icon" href="web.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
@@ -270,22 +271,86 @@
                 flex-direction: column;
             }
         }
+
+        .responsive-sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: var(--primary);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    .responsive-sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* Close button inside the sidebar */
+        .responsive-sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /* Button to open the sidebar */
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            display: none; /* Hidden by default */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .openbtn {
+                display: inline-block; /* Show open button on smaller screens */
+            }
+        }
+
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">WasteWiseWeb</div>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: #f4f4f4;">WasteWiseWeb</a></div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
                 <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
-                <li><a href="attendance.html">Attendance</a></li>
+                <!-- <li><a href="attendance.html">Attendance</a></li> -->
                 <li><a href="marketplace.html">Store</a></li>
                 <li><a href="account.html">Sign In</a></li>
             </ul>
+
+            <div id="mySidebar" class="responsive-sidebar">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="index.html">Home</a>
+                <a href="educational-hub.html">Learn</a>
+                <a href="scheduling.html">Events</a>
+                <a href="monitoring.html">Dashboard</a>
+                <a href="reporting.html">Report</a>
+                <!-- <a href="attendance.html">Attendance</a> -->
+                <a href="marketplace.html">Store</a>
+                <a href="account.html">Sign In</a>
+                <!-- Add other navigation links here -->
+            </div>
+            <button class="openbtn" onclick="openNav()">&#9776; Menu</button>
+
         </nav>
     </header>
 
@@ -318,94 +383,98 @@
                 <p class="event-description">Learn practical tips for reducing your environmental impact in this interactive workshop led by local sustainability experts.</p>
             </div>
             <div class="event-item">
-                <p class="event-date">October 1, 2024</p>
+                <p class="event-date">October 2, 2024</p>
                 <h3 class="event-title">Neighborhood Clean-up Day</h3>
                 <p class="event-description">Let's come together to clean up our streets and parks. Equipment will be provided. Meet at the community park at 9 AM.</p>
             </div>
         </section>
 
-        <section class="sms-notification">
-            <h2>Get SMS Notifications</h2>
-            <p>Stay updated with our latest events and announcements via SMS.</p>
-            <form class="sms-form">
-                <input type="tel" placeholder="Enter your phone number" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </section>
     </main>
 
     <footer>
         <div class="container">
             <p>&copy; 2024 WasteWiseWeb. All rights reserved.</p>
             <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Calendar functionality
-        const calendarGrid = document.getElementById('calendar-grid');
-        const currentMonthElement = document.getElementById('current-month');
-        const prevMonthButton = document.getElementById('prev-month');
-        const nextMonthButton = document.getElementById('next-month');
+// Calendar functionality
+const calendarGrid = document.getElementById('calendar-grid');
+const currentMonthElement = document.getElementById('current-month');
+const prevMonthButton = document.getElementById('prev-month');
+const nextMonthButton = document.getElementById('next-month');
 
-        let currentDate = new Date();
+let currentDate = new Date();
 
-        function generateCalendar(year, month) {
-            calendarGrid.innerHTML = '';
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
+function generateCalendar(year, month) {
+    calendarGrid.innerHTML = '';
 
-            currentMonthElement.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
+    // Add weekday names at the top
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    weekdays.forEach(day => {
+        const dayNameElement = document.createElement('div');
+        dayNameElement.classList.add('weekday-name');
+        dayNameElement.textContent = day;
+        calendarGrid.appendChild(dayNameElement);
+    });
 
-            for (let i = 0; i < firstDay.getDay(); i++) {
-                calendarGrid.appendChild(document.createElement('div'));
-            }
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayElement = document.createElement('div');
-                dayElement.classList.add('calendar-day');
-                dayElement.innerHTML = `<span class="day-number">${day}</span>`;
+    currentMonthElement.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
 
-                if (year === currentDate.getFullYear() && month === currentDate.getMonth() && day === currentDate.getDate()) {
-                    dayElement.classList.add('today');
-                }
+    // Add empty divs for days before the start of the month
+    for (let i = 0; i < firstDay.getDay(); i++) {
+        calendarGrid.appendChild(document.createElement('div'));
+    }
 
-                // Add event dots (you can customize this based on your actual events)
-                if (day === 15 || day === 22) {
-                    dayElement.classList.add('has-event');
-                    dayElement.innerHTML += '<div class="event-dot"></div>';
-                }
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('calendar-day');
+        dayElement.innerHTML = `<span class="day-number">${day}</span>`;
 
-                calendarGrid.appendChild(dayElement);
-            }
+        const currentDay = new Date(year, month, day).getDay();
+        
+        // Apply blue background color to Sundays
+        if (currentDay === 0) { // 0 represents Sunday
+            dayElement.style.backgroundColor = '#2196F3';
+            dayElement.style.color = '#fff'; // Optional: set text color to white for contrast
+            dayElement.innerHTML = `${day} <br> Weekly Garbage Pickups`;
         }
 
-        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        if (year === currentDate.getFullYear() && month === currentDate.getMonth() && day === currentDate.getDate()) {
+            dayElement.classList.add('today');
+        }
 
-        prevMonthButton.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-        });
+        // Add event dots (you can customize this based on your actual events)
+        if (day === 15 || day === 22) {
+            dayElement.classList.add('has-event');
+            dayElement.innerHTML += '<div class="event-dot"></div>';
+        }
 
-        nextMonthButton.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-        });
+        calendarGrid.appendChild(dayElement);
+    }
+}
 
-        // SMS form submission (you would need to implement the actual SMS functionality on the server-side)
-        const smsForm = document.querySelector('.sms-form');
-        smsForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const phoneNumber = e.target.querySelector('input[type="tel"]').value;
-            alert(`Thank you! You've been subscribed with the phone number: ${phoneNumber}`);
-            e.target.reset();
-        });
+generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+
+prevMonthButton.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+});
+
+nextMonthButton.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+});
+
     </script>
 </body>
 </html>
